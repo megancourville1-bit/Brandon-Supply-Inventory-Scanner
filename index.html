@@ -27,11 +27,39 @@
       <p class="note">Tap once when taking/opening one tracked unit. The Google inventory page will confirm the update.</p>
     </div>
 
-    <div id="homePanel" style="display:none">
-      <p>Choose what you need to do.</p>
-      <a class="btn receive" href="https://script.google.com/macros/s/AKfycby87fqSOksD0q9gD9XKxxOqAUGOER59w__goqjVBotVRVPya9F2ybVpk0u_56VdNyYr/exec?action=receive">📦 RECEIVE SUPPLIES</a>
-      <p class="note">For taking supplies out, scan the QR label attached to that supply.</p>
-    </div>
+   <div id="homePanel" style="display:none">
+  <p>Choose what you need to do:</p>
+  <button class="btn receive" id="receiveBtn">📦 RECEIVE SUPPLIES</button>
+  <p class="note">For taking supplies out, scan the QR label attached to that supply.</p>
+</div>
+
+<div id="receivePanel" style="display:none">
+  <h2>📦 Receive Brandon's Supplies</h2>
+  <p class="note">Use this when an order has actually arrived.</p>
+
+  <label><strong>Supply:</strong></label><br><br>
+  <select id="receiveItem" style="width:100%; padding:14px; font-size:17px;"></select>
+
+  <br><br>
+
+  <label><strong>Quantity Received:</strong></label>
+  <div id="receiveUnit" style="margin:12px 0; font-size:16px;"></div>
+
+  <input
+    id="receiveQuantity"
+    type="number"
+    min="1"
+    step="1"
+    placeholder="Example: 30"
+    style="width:100%; box-sizing:border-box; padding:14px; font-size:18px;"
+  >
+
+  <br><br>
+
+  <button class="btn receive" id="addInventoryBtn">Add to Inventory</button>
+
+  <div id="receiveResult" style="margin-top:25px; text-align:center;"></div>
+</div>
   </div>
 
 <script>
@@ -67,6 +95,10 @@
   } else {
     document.getElementById("homePanel").style.display = "block";
   }
+  document.getElementById("receiveBtn").addEventListener("click", function() {
+  document.getElementById("homePanel").style.display = "none";
+  document.getElementById("receivePanel").style.display = "block";
+});
 </script>
 </body>
 </html>
