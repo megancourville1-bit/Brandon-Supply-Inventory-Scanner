@@ -43,8 +43,27 @@
     document.getElementById("usePanel").style.display = "block";
     document.getElementById("itemId").textContent = id;
     document.getElementById("removeBtn").addEventListener("click", function() {
-      window.open(backend + "?id=" + encodeURIComponent(id), "_blank");
-    });
+  const button = document.getElementById("removeBtn");
+
+  button.disabled = true;
+  button.textContent = "UPDATING INVENTORY...";
+
+  const formData = new URLSearchParams();
+  formData.append("id", id);
+
+  fetch(backend, {
+    method: "POST",
+    body: formData,
+    mode: "no-cors"
+  })
+  .then(function() {
+    button.textContent = "✓ INVENTORY UPDATED";
+  })
+  .catch(function() {
+    button.disabled = false;
+    button.textContent = "TRY AGAIN";
+  });
+});
   } else {
     document.getElementById("homePanel").style.display = "block";
   }
