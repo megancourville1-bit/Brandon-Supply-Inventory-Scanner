@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brandon Inventory</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f6f8fa; margin:0; color:#1f2937; }
+    .card { max-width:520px; margin:40px auto; background:white; padding:28px; border-radius:16px;
+             box-shadow:0 4px 18px rgba(0,0,0,.08); text-align:center; }
+    h1 { margin-top:0; }
+    .id { font-family:monospace; background:#eef2f7; padding:8px 10px; border-radius:8px; display:inline-block; }
+    button, a.btn { display:block; width:100%; box-sizing:border-box; margin:14px 0; padding:18px;
+                     border:0; border-radius:12px; font-size:20px; font-weight:700; text-decoration:none; cursor:pointer; }
+    .remove { background:#355C7D; color:white; }
+    .receive { background:#e8eef4; color:#213547; }
+    .note { font-size:14px; color:#667085; line-height:1.45; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Brandon's Inventory</h1>
+    <div id="usePanel" style="display:none">
+      <p>Supply code:</p>
+      <p class="id" id="itemId"></p>
+      <button class="remove" id="removeBtn">REMOVE 1 FROM INVENTORY</button>
+      <p class="note">Tap once when taking/opening one tracked unit. The Google inventory page will confirm the update.</p>
+    </div>
+
+    <div id="homePanel" style="display:none">
+      <p>Choose what you need to do.</p>
+      <a class="btn receive" href="https://script.google.com/macros/s/AKfycby87fqSOksD0q9gD9XKxxOqAUGOER59w__goqjVBotVRVPya9F2ybVpk0u_56VdNyYr/exec?action=receive">📦 RECEIVE SUPPLIES</a>
+      <p class="note">For taking supplies out, scan the QR label attached to that supply.</p>
+    </div>
+  </div>
+
+<script>
+  const backend = "https://script.google.com/macros/s/AKfycby87fqSOksD0q9gD9XKxxOqAUGOER59w__goqjVBotVRVPya9F2ybVpk0u_56VdNyYr/exec";
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  if (id) {
+    document.getElementById("usePanel").style.display = "block";
+    document.getElementById("itemId").textContent = id;
+    document.getElementById("removeBtn").addEventListener("click", function() {
+      window.location.href = backend + "?id=" + encodeURIComponent(id);
+    });
+  } else {
+    document.getElementById("homePanel").style.display = "block";
+  }
+</script>
+</body>
+</html>
