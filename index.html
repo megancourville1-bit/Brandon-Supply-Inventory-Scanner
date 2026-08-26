@@ -43,7 +43,7 @@
     document.getElementById("usePanel").style.display = "block";
     document.getElementById("itemId").textContent = id;
     document.getElementById("removeBtn").addEventListener("click", function() {
-      window.location.href = backend + "?id=" + encodeURIComponent(id);
+      window.open(backend + "?id=" + encodeURIComponent(id), "_blank");
     });
   } else {
     document.getElementById("homePanel").style.display = "block";
