@@ -99,6 +99,29 @@
   document.getElementById("homePanel").style.display = "none";
   document.getElementById("receivePanel").style.display = "block";
 });
+  fetch(backend + "?action=list")
+  .then(response => response.json())
+  .then(items => {
+    const select = document.getElementById("receiveItem");
+
+    items.forEach(item => {
+      const option = document.createElement("option");
+      option.value = item.id;
+      option.textContent = item.name;
+      option.setAttribute("data-unit", item.unit || "");
+      select.appendChild(option);
+    });
+
+    function updateReceiveUnit() {
+      const selected = select.options[select.selectedIndex];
+      const unit = selected ? selected.getAttribute("data-unit") : "";
+      document.getElementById("receiveUnit").textContent =
+        unit ? "Unit: " + unit : "";
+    }
+
+    select.addEventListener("change", updateReceiveUnit);
+    updateReceiveUnit();
+  });
 </script>
 </body>
 </html>
