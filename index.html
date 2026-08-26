@@ -122,6 +122,51 @@
     select.addEventListener("change", updateReceiveUnit);
     updateReceiveUnit();
   });
+  document.getElementById("addInventoryBtn").addEventListener("click", function () {
+  const button = document.getElementById("addInventoryBtn");
+  const supply = document.getElementById("receiveItem");
+  const quantity = document.getElementById("receiveQuantity").value;
+  const result = document.getElementById("receiveResult");
+
+  if (!supply.value) {
+    result.textContent = "Please choose a supply.";
+    return;
+  }
+
+  if (!quantity || Number(quantity) <= 0) {
+    result.textContent = "Please enter a quantity.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "ADDING...";
+
+  const formData = new URLSearchParams();
+  formData.append("action", "receive");
+  formData.append("id", supply.value);
+  formData.append("quantity", quantity);
+
+  fetch(backend, {
+    method: "POST",
+    body: formData,
+    mode: "no-cors"
+  })
+  .then(function () {
+    result.textContent = "✓ Supplies added to inventory!";
+    button.textContent = "✓ ADDED";
+    document.getElementById("receiveQuantity").value = "";
+
+    setTimeout(function () {
+      button.disabled = false;
+      button.textContent = "Add to Inventory";
+    }, 1500);
+  })
+  .catch(function () {
+    result.textContent = "Something went wrong. Please try again.";
+    button.disabled = false;
+    button.textContent = "Add to Inventory";
+  });
+});
 </script>
 </body>
 </html>
