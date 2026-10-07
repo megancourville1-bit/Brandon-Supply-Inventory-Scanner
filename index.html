@@ -23,7 +23,17 @@
     <div id="usePanel" style="display:none">
       <p>Supply code:</p>
       <p class="id" id="itemId"></p>
-      <button class="remove" id="removeBtn">REMOVE 1 FROM INVENTORY</button>
+      <label for="removeQuantity"><strong>Quantity to Remove:</strong></label>
+
+<input
+  id="removeQuantity"
+  type="number"
+  min="1"
+  step="1"
+  value="1"
+  style="width:100%; box-sizing:border-box; padding:14px; margin-top:10px; font-size:20px; text-align:center;"
+>
+      <button class="remove" id="removeBtn">REMOVE FROM INVENTORY</button>
       <p class="note">Tap once when taking/opening one tracked unit. The Google inventory page will confirm the update.</p>
     </div>
 
@@ -72,12 +82,19 @@
     document.getElementById("itemId").textContent = id;
     document.getElementById("removeBtn").addEventListener("click", function() {
   const button = document.getElementById("removeBtn");
+  const quantity = document.getElementById("removeQuantity").value;
+
+if (!quantity || Number(quantity) <= 0) {
+  alert("Please enter a quantity to remove.");
+  return;
+}    
 
   button.disabled = true;
   button.textContent = "UPDATING INVENTORY...";
 
   const formData = new URLSearchParams();
   formData.append("id", id);
+  formData.append("quantity", document.getElementById("removeQuantity").value);   
 
   fetch(backend, {
     method: "POST",
